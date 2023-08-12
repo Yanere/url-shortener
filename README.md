@@ -1,6 +1,8 @@
-
 #  URL Shortener
 The Flask URL Shortener is a web application that allows users to create shortened versions of long URLs. This is achieved using the Flask framework, SQLite database for data storage, and Python for backend logic. Additionally, the application includes a static folder for CSS styles to enhance the user interface.
+
+![1](https://github.com/Yanere/url-shortener/assets/47921593/7a411401-4a91-40f7-8be5-6495001ce9c9)
+![2](https://github.com/Yanere/url-shortener/assets/47921593/24891ee7-9107-4f32-947d-b043bbdf38e3)
 
 ## Getting Started
 ### Prerequisites
