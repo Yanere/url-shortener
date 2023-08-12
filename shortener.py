@@ -5,12 +5,14 @@ import string
 
 app = Flask(__name__)
 
+
 def get_db():
     if "db" not in g:
         g.db = sqlite3.connect("shortener.db")
         g.db.row_factory = sqlite3.Row
         create_table()
     return g.db
+
 
 def create_table():
     cursor = g.db.cursor()
@@ -23,14 +25,17 @@ def create_table():
     ''')
     g.db.commit()
 
+
 @app.teardown_appcontext
 def close_db(error):
     if hasattr(g, "db"):
         g.db.close()
 
+
 @app.route("/")
 def greetings():
     return render_template("base.html")
+
 
 @app.route("/shorten", methods=["POST"])
 def shortener():
@@ -47,15 +52,18 @@ def shortener():
         short_url = result[0]
     else:
         short_url = generate_short_url()
-        cursor.execute("INSERT into urls (long_url, short_url) VALUES (?,?)", (long_url, short_url))
+        cursor.execute(
+            "INSERT into urls (long_url, short_url) VALUES (?,?)", (long_url, short_url))
         g.db.commit()
 
     return render_template("shorturl.html", shortened_url=short_url)
+
 
 def generate_short_url():
     available_chars = string.ascii_letters + string.digits
     short_url = "".join(random.choice(available_chars) for _ in range(6))
     return short_url
+
 
 @app.route("/<short_url>")
 def redirect_to_long(short_url):
@@ -69,6 +77,7 @@ def redirect_to_long(short_url):
         return redirect(long_url)
     else:
         return "Short URL not found :("
+
 
 if __name__ == "__main__":
     app.run()
